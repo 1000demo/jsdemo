@@ -1,0 +1,380 @@
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temperature Converter</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --sand: #f0d98c;
+        --sand-dark: #e8cc72;
+        --coral: #f4a282;
+        --coral-light: #f7b99f;
+        --coral-dark: #e8856a;
+        --ink: #1a1108;
+        --cream: #fdf6e3;
+        --white: #ffffff;
+        --shadow: rgba(26, 17, 8, 0.15);
+      }
+
+      body {
+        min-height: 100vh;
+        background-color: var(--sand);
+        background-image:
+          radial-gradient(ellipse at 20% 80%, rgba(244, 162, 130, 0.3) 0%, transparent 50%),
+          radial-gradient(ellipse at 80% 20%, rgba(232, 204, 114, 0.5) 0%, transparent 50%),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='0.8' fill='%23c8a84b' opacity='0.25'/%3E%3C/svg%3E");
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'DM Sans', sans-serif;
+      }
+
+      .scene {
+        position: relative;
+        width: 100%;
+        max-width: 560px;
+        padding: 24px;
+      }
+
+      /* Floating decorative elements */
+      .deco {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.18;
+        background: var(--coral-dark);
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .deco-1 {
+        width: 90px;
+        height: 90px;
+        top: -30px;
+        right: -20px;
+        animation-delay: 0s;
+      }
+
+      .deco-2 {
+        width: 50px;
+        height: 50px;
+        bottom: -10px;
+        left: -15px;
+        animation-delay: 2s;
+      }
+
+      .deco-3 {
+        width: 30px;
+        height: 30px;
+        top: 40px;
+        left: -30px;
+        opacity: 0.12;
+        animation-delay: 4s;
+      }
+
+      @keyframes float {
+
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+
+      .card {
+        background: var(--coral);
+        border-radius: 24px;
+        padding: 52px 48px 48px;
+        box-shadow:
+          0 2px 0 var(--coral-dark),
+          0 6px 0 rgba(232, 133, 106, 0.5),
+          0 16px 48px var(--shadow),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+        animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(28px) scale(0.97);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* subtle grain overlay */
+      .card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        border-radius: inherit;
+      }
+
+      .card-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.1rem;
+        font-weight: 400;
+        font-style: italic;
+        color: var(--ink);
+        opacity: 0.75;
+        text-align: center;
+        margin-bottom: 32px;
+        letter-spacing: 0.01em;
+        line-height: 1.5;
+      }
+
+      .input-row {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        align-items: stretch;
+      }
+
+      .temp-input {
+        width: 130px;
+        padding: 14px 16px;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--ink);
+        background: var(--cream);
+        border: 2px solid transparent;
+        border-radius: 12px;
+        outline: none;
+        text-align: center;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        box-shadow: inset 0 2px 6px rgba(26, 17, 8, 0.08);
+      }
+
+      .temp-input::placeholder {
+        color: rgba(26, 17, 8, 0.25);
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      .temp-input:focus {
+        border-color: var(--ink);
+        box-shadow: inset 0 2px 6px rgba(26, 17, 8, 0.08), 0 0 0 3px rgba(26, 17, 8, 0.08);
+      }
+
+      .unit-select {
+        padding: 14px 14px 14px 16px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--ink);
+        background: var(--cream);
+        border: 2px solid transparent;
+        border-radius: 12px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8' viewBox='0 0 14 8'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%231a1108' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 36px;
+        transition: border-color 0.2s;
+        box-shadow: inset 0 2px 6px rgba(26, 17, 8, 0.08);
+      }
+
+      .unit-select:focus {
+        border-color: var(--ink);
+      }
+
+      .submit-btn {
+        display: block;
+        margin: 24px auto 0;
+        padding: 14px 40px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--cream);
+        background: var(--ink);
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.15s, box-shadow 0.15s;
+        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4), 0 6px 20px rgba(26, 17, 8, 0.25);
+      }
+
+      .submit-btn::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+        pointer-events: none;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 0 rgba(0, 0, 0, 0.35), 0 10px 28px rgba(26, 17, 8, 0.3);
+      }
+
+      .submit-btn:active {
+        transform: translateY(1px);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), 0 4px 12px rgba(26, 17, 8, 0.2);
+      }
+
+      /* Result area */
+      .result {
+        margin-top: 28px;
+        text-align: center;
+        min-height: 56px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        font-size: 40px;
+        font-weight: bold;
+        font-style: italic;
+      }
+
+      .result-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(26, 17, 8, 0.5);
+      }
+
+      .result-value {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: var(--ink);
+        line-height: 1.1;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.4s, transform 0.4s;
+      }
+
+      .result-value.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .error-msg {
+        font-size: 0.82rem;
+        color: rgba(26, 17, 8, 0.6);
+        font-style: italic;
+      }
+
+      .mybtn {
+
+        border: 1px solid #fbf4e1;
+        margin: 20px auto 0;
+        width: 100px;
+        display: flex;
+        background: #fbf4e1;
+        padding: 16px;
+        border-radius: 10px;
+        text-align: center;
+        justify-content: center;
+
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="scene">
+
+      <div class="card">
+        <form id="tempCalc" onsubmit="calculateTemp(); return false">
+          <p class="card-title">Please enter the temperature you'd like to convert.</p>
+          <div class="input-row">
+
+            <input class="temp-input" type="number" id="tempInput" placeholder="0" />
+            <br />
+
+            <select class="unit-select" name="temp_diff" id="temp_diff">
+              <option value="cel">Celsius</option>
+              <option value="fah">Fahrenheit</option>
+            </select>
+
+          </div>
+          <input type="submit" name="temp" class="mybtn" />
+          <br />
+
+          <span class="result" id="resultContainer"></span>
+        </form>
+
+      </div>
+    </div>
+
+    <script>
+      const calculateTemp = () => {
+        const takeInput = document.getElementById('tempInput').value;
+        //console.log(takeInput);
+
+        const takeSelection = document.getElementById('temp_diff');
+        const showSelection = temp_diff.options[takeSelection.selectedIndex].value;
+
+        //console.log(showSelection); 
+        const celToFah = (cel) => {
+          let fahrenheit = Math.round((cel * 9 / 5) + 32);
+          return fahrenheit;
+        }
+
+        const fahToCel = (feh) => {
+          let celci = Math.round((feh - 32) * 5 / 9);
+          return celci;
+        }
+
+
+        let result;
+        if (showSelection == 'cel') {
+          result = celToFah(takeInput);
+          document.getElementById('resultContainer').innerHTML = `${result}° Fahrenheit`;
+        }
+        else {
+          result = fahToCel(takeInput);
+          document.getElementById('resultContainer').innerHTML = `${result}° Celcious`;
+        }
+
+
+      }
+
+
+      /*
+      The selectedIndex property sets or returns the index of the selected option in a drop-down list.
+    
+    The index starts at 0.
+    
+    Note: If the drop-down list allows multiple selections it will only return the index of the first option selected.
+    
+    Note: The value "-1" will deselect all options (if any).
+    
+    Note: If no option is selected, the selectedIndex property will return -1.
+      */
+    </script>
+  </body>
+
+  </html>
