@@ -1,76 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>My Projects</title>
-  <style>
-   @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-    body {
-      font-family: "Montserrat", sans-serif;
-      font-optical-sizing: auto;
-      font-weight: normal;
-      font-style: normal;
-      background: #0f172a;
-      color: #fff;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .project {
-      background: #1e293b;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      transition: 0.3s;
-    }
-
-    .project:hover {
-      background: #334155;
-    }
-
-    .project-name {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .project-link {
-      margin-top: 5px;
-    }
-
-    .project-link a {
-      color: #38bdf8;
-      text-decoration: none;
-    }
-
-    .project-link a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>My Projects</h1>
-
-  <div class="project">
-    <div class="project-name">Search Functionality</div>
-    <div class="project-link">
-      <a href="https://1000demo.github.io/jsdemo/search1.html" target="_blank">View Project</a>
-    </div>
-  </div>
-
-  <div class="project">
-    <div class="project-name">Employee Tracker</div>
-    <div class="project-link">
-      <a href="https://your-link.com" target="_blank">View Project</a>
-    </div>
-  </div>
-
-  <!-- Add more projects like this -->
-  
-</body>
+   <head>
+      <meta charset="UTF-8">
+      <title>My Projects</title>
+      <style>
+         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+         body {
+         font-family: "Montserrat", sans-serif;
+         font-optical-sizing: auto;
+         font-weight: normal;
+         font-style: normal;
+         background: #f6f8fa;
+         margin: 0;
+         }
+         header {
+         background: #ffffff;
+         padding: 20px 30px;
+         border-bottom: 1px solid #e1e4e8;
+         }
+         h1 {
+         margin: 0;
+         font-size: 22px;
+         }
+         .container {
+         max-width: 800px;
+         margin: 30px auto;
+         padding: 0 20px;
+         }
+         .repo {
+         background: #ffffff;
+         border: 1px solid #e1e4e8;
+         border-radius: 8px;
+         padding: 16px;
+         margin-bottom: 15px;
+         transition: 0.2s;
+         }
+         .repo:hover {
+         border-color: #0366d6;
+         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+         }
+         .repo-name {
+         font-size: 18px;
+         font-weight: 600;
+         color: #0366d6;
+         }
+         .repo-name a {
+         text-decoration: none;
+         color: inherit;
+         }
+         .repo-name a:hover {
+         text-decoration: underline;
+         }
+         .repo-desc {
+         font-size: 14px;
+         color: #586069;
+         margin-top: 6px;
+         }
+         .repo-link {
+         margin-top: 10px;
+         }
+         .repo-link a {
+         font-size: 13px;
+         color: #24292e;
+         background: #eff3f6;
+         padding: 5px 10px;
+         border-radius: 6px;
+         text-decoration: none;
+         border: 1px solid #d1d5da;
+         }
+         .repo-link a:hover {
+         background: #e1e4e8;
+         }
+      </style>
+   </head>
+   <body>
+      <header>
+         <h1>My Projects</h1>
+      </header>
+      <div class="container">
+         <div class="repo">
+            <div class="repo-name">
+               <a href="https://1000demo.github.io/jsdemo/search1.html" target="_blank">Search Functionality</a>
+            </div>
+            <div class="repo-desc">
+               A simple JavaScript-based search functionality.
+            </div>
+            <div class="repo-link">
+               <a href="https://your-link.com" target="_blank">Open Project</a>
+            </div>
+         </div>
+         <div class="repo">
+            <div class="repo-name">
+               <a href="https://your-link.com" target="_blank">Employee Tracker</a>
+            </div>
+            <div class="repo-desc">
+               Track employee data using Google Sheets integration.
+            </div>
+            <div class="repo-link">
+               <a href="https://your-link.com" target="_blank">Open Project</a>
+            </div>
+         </div>
+      </div>
+   </body>
 </html>
