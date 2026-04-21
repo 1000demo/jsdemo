@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>People Records</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .search-wrapper {
+      max-width: 500px;
+      margin: 0 auto 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .search-wrapper label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .search {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div>
+    <div class="search-wrapper">
+      <label for="search">Search Users</label>
+      <input type="search" id="myInput" class="search" onkeyup="search()" placeholder="Search by Name">
+    </div>
+  </div>
+
+  <table id="myTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Degree</th>
+        <th>Profession</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Amit Sharma</td>
+        <td>B.Tech</td>
+        <td>Software Engineer</td>
+      </tr>
+      <tr>
+        <td>Priya Patel</td>
+        <td>MBA</td>
+        <td>Marketing Manager</td>
+      </tr>
+      <tr>
+        <td>Rahul Verma</td>
+        <td>B.Sc</td>
+        <td>Data Analyst</td>
+      </tr>
+      <tr>
+        <td>Sneha Iyer</td>
+        <td>M.Tech</td>
+        <td>AI Engineer</td>
+      </tr>
+      <tr>
+        <td>Vikram Singh</td>
+        <td>B.Com</td>
+        <td>Accountant</td>
+      </tr>
+      <tr>
+        <td>Anjali Mehta</td>
+        <td>BA</td>
+        <td>Content Writer</td>
+      </tr>
+      <tr>
+        <td>Rohit Kumar</td>
+        <td>BCA</td>
+        <td>Web Developer</td>
+      </tr>
+      <tr>
+        <td>Pooja Nair</td>
+        <td>MCA</td>
+        <td>Software Developer</td>
+      </tr>
+      <tr>
+        <td>Karan Malhotra</td>
+        <td>BBA</td>
+        <td>Business Analyst</td>
+      </tr>
+      <tr>
+        <td>Neha Gupta</td>
+        <td>M.Sc</td>
+        <td>Research Scientist</td>
+      </tr>
+      <tr>
+        <td>Arjun Reddy</td>
+        <td>MBBS</td>
+        <td>Doctor</td>
+      </tr>
+      <tr>
+        <td>Divya Kapoor</td>
+        <td>B.Des</td>
+        <td>UI/UX Designer</td>
+      </tr>
+      <tr>
+        <td>Sachin Yadav</td>
+        <td>B.Tech</td>
+        <td>Mechanical Engineer</td>
+      </tr>
+      <tr>
+        <td>Meera Joshi</td>
+        <td>MA</td>
+        <td>Teacher</td>
+      </tr>
+      <tr>
+        <td>Aditya Chauhan</td>
+        <td>B.Sc</td>
+        <td>Lab Technician</td>
+      </tr>
+      <tr>
+        <td>Kavita Shah</td>
+        <td>M.Com</td>
+        <td>Finance Manager</td>
+      </tr>
+      <tr>
+        <td>Nikhil Jain</td>
+        <td>BCA</td>
+        <td>App Developer</td>
+      </tr>
+      <tr>
+        <td>Riya Sen</td>
+        <td>BA</td>
+        <td>Journalist</td>
+      </tr>
+      <tr>
+        <td>Manish Tiwari</td>
+        <td>MBA</td>
+        <td>HR Manager</td>
+      </tr>
+      <tr>
+        <td>Simran Kaur</td>
+        <td>B.Pharm</td>
+        <td>Pharmacist</td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+
+const search = () => {
+  let myInputValue = document.getElementById("myInput").value.toUpperCase().trim();
+  let myTable = document.getElementById('myTable');
+  let tr = myTable.getElementsByTagName('tr');
+
+  for (let i = 1; i < tr.length; i++) { // skip header
+    let td = tr[i].getElementsByTagName('td')[0];
+
+    if (td) {
+      let textValue = td.textContent.trim().toUpperCase();
+
+      if (myInputValue === "" || textValue.includes(myInputValue)) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+  </script>
+</body>
+
+</html>
