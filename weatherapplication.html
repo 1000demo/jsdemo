@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Application-02</title>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+       /* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+    color: #fff;
+}
+
+/* ===== BACKGROUNDS ===== */
+body.sunny {
+    background: linear-gradient(135deg, #ff9a00, #ff5e62);
+}
+
+body.clouds {
+    background: linear-gradient(135deg, #485563, #29323c);
+}
+
+body.rain {
+    background: linear-gradient(135deg, #314755, #26a0da);
+}
+
+body.snow {
+    background: linear-gradient(135deg, #83a4d4, #b6fbff);
+}
+
+body.mist {
+    background: linear-gradient(135deg, #757f9a, #d7dde8);
+}
+
+body.thunder {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+/* ===== LIGHTNING EFFECT ⚡ ===== */
+body.thunder::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    animation: lightning 4s infinite;
+    z-index: 0;
+}
+
+@keyframes lightning {
+    0%, 95%, 100% { opacity: 0; }
+    96% { opacity: 0.8; }
+    97% { opacity: 0.2; }
+    98% { opacity: 1; }
+    99% { opacity: 0; }
+}
+
+/* ===== CARD ===== */
+.container {
+    width: 380px;
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    position: relative;
+    z-index: 1;
+}
+
+/* SEARCH */
+.weather_search {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.2);
+    padding: 10px 15px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.weather_search input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* TEXT */
+.weather_city {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.weather_date_time {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 10px;
+}
+
+.weather_forecast {
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+/* TEMP */
+.weather_temperature {
+    font-size: 52px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+/* ICON */
+.weather_icon img {
+    width: 90px;
+}
+
+/* MIN MAX */
+.weather_minmax {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+/* INFO GRID */
+.weather_info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.weather_card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.2);
+    transition: 0.3s;
+}
+
+.weather_card:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.3);
+}
+
+.weather_card i {
+    font-size: 18px;
+}
+
+.weather_card p:first-child {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.weather_card p:last-child {
+    font-size: 15px;
+    font-weight: 600;
+}
+    </style>
+</head>
+
+<body>
+
+    <section class="container">
+
+        <div class="weather_header">
+            <form class="weather_search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="city_name" placeholder="Search your city" />
+            </form>
+        </div>
+
+        <div class="weather_body">
+            <h1 class="weather_city"></h1>
+            <p class="weather_date_time"></p>
+
+            <div class="weather_data">
+                <p class="weather_forecast"></p>
+                <div class="weather_icon"></div>
+            </div>
+
+            <p class="weather_temperature"></p>
+
+            <div class="weather_minmax">
+                <p class="weather_min"></p>
+                <p class="weather_max"></p>
+            </div>
+        </div>
+
+        <section class="weather_info">
+            <div class="weather_card">
+                <i class="fa-solid fa-droplet"></i>
+                <div>
+                    <p>Feels Like</p>
+                    <p class="weather_feelsLike"></p>
+                </div>
+            </div>
+
+            <div class="weather_card">
+                <i class="fa-solid fa-droplet"></i>
+                <div>
+                    <p>Humidity</p>
+                    <p class="weather_humidity"></p>
+                </div>
+            </div>
+
+            <div class="weather_card">
+                <i class="fa-solid fa-droplet"></i>
+                <div>
+                    <p>Wind</p>
+                    <p class="weather_wind"></p>
+                </div>
+            </div>
+
+            <div class="weather_card">
+                <i class="fa-solid fa-droplet"></i>
+                <div>
+                    <p>Pressure</p>
+                    <p class="weather_pressure"></p>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+    <script>
+        let cityName = document.querySelector(".weather_city");
+        let dateTime = document.querySelector(".weather_date_time");
+        let w_forecast = document.querySelector(".weather_forecast");
+        let w_icon = document.querySelector(".weather_icon");
+        let w_temperature = document.querySelector(".weather_temperature");
+        let w_minTem = document.querySelector(".weather_min");
+        let w_maxTem = document.querySelector(".weather_max");
+
+        let w_feelsLike = document.querySelector(".weather_feelsLike");
+        let w_humidity = document.querySelector(".weather_humidity");
+        let w_wind = document.querySelector(".weather_wind");
+        let w_pressure = document.querySelector(".weather_pressure");
+        let citySearch = document.querySelector(".weather_search");
+
+        const getCountryName = (code) => {
+            return new Intl.DisplayNames(["en"], { type: "region" }).of(code);
+        }
+
+        const getDateTime = (dt) => {
+            const date = new Date(dt * 1000);
+            return new Intl.DateTimeFormat('en-US', {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+            }).format(date);
+        }
+
+        let city = 'pune';
+
+        citySearch.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let input = document.querySelector('.city_name');
+            city = input.value;
+            getWeatherDate();
+            input.value = '';
+        });
+
+        const getWeatherDate = async () => {
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=a0b06669a793506ae54060f7df8a5fb6`;
+
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+
+                const { main, weather, wind, sys, dt } = data;
+
+                cityName.innerHTML = `${data.name}, ${getCountryName(sys.country)}`;
+                dateTime.innerHTML = getDateTime(dt);
+
+                w_forecast.innerHTML = weather[0].main;
+
+                // 🔥 Dynamic background
+                document.body.className = "";
+                const condition = weather[0].main.toLowerCase();
+
+                if (condition.includes("clear")) document.body.classList.add("sunny");
+                else if (condition.includes("cloud")) document.body.classList.add("clouds");
+                else if (condition.includes("rain")) document.body.classList.add("rain");
+                else if (condition.includes("snow")) document.body.classList.add("snow");
+                else document.body.classList.add("mist");
+
+                w_icon.innerHTML = `<img src="https://openweathermap.org/img/wn/${weather[0].icon}@4x.png">`;
+
+                w_temperature.innerHTML = `${main.temp}°`;
+                w_minTem.innerHTML = `Min: ${main.temp_min.toFixed()}`;
+                w_maxTem.innerHTML = `Max: ${main.temp_max.toFixed()}`;
+
+                w_feelsLike.innerHTML = `${main.feels_like.toFixed(2)}°`;
+                w_humidity.innerHTML = `${main.humidity}%`;
+                w_wind.innerHTML = `${wind.speed} m/s`;
+                w_pressure.innerHTML = `${main.pressure} hPa`;
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        document.body.addEventListener('load', getWeatherDate());
+		
+		
+		//animation
+		
+    </script>
+
+</body>
+
+</html>
