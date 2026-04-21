@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermometer Projet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Full page layout */
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        }
+
+        /* Center content */
+        h1 {
+            font-size: 2.5rem;
+            color: #fff;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+        }
+
+        /* Thermometer icon */
+        #thermoIcon {
+            margin-left: 10px;
+            font-size: 8.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>I am Thermometer <span id="thermoIcon" class="fa"></span></h1>
+
+    <script>
+        const loadIcon = () => {
+            const myIcon = document.getElementById('thermoIcon');
+            myIcon.innerHTML = '&#xf2cb;';
+
+            setTimeout(() => {
+                myIcon.innerHTML = '&#xf2ca';
+                myIcon.style.color = '#f8b627';
+            }, 1000);
+
+            setTimeout(() => {
+                myIcon.innerHTML = '&#xf2c9;';
+            }, 2000);
+
+            setTimeout(() => {
+                myIcon.innerHTML = '&#xf2c8;';
+            }, 3000);
+
+            setTimeout(() => {
+                myIcon.innerHTML = '&#xf2c7;';
+                myIcon.style.color = '#d63031';
+            }, 4000);
+        }
+        loadIcon();
+
+        // 🔁 infinite loop every 4 sec
+        setInterval(loadIcon, 5000);
+
+        
+    </script>
+</body>
+
+</html>
