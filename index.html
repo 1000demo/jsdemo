@@ -14,9 +14,9 @@
          margin: 0;
          }
          header {
-         background: #ffffff;
+         background: #0b0e17;
          padding: 10px 16px;
-         border-bottom: 1px solid #e1e4e8;
+         border-bottom: 1px solid #f0c040;
          }
          h1 {
          margin: 0;
@@ -32,43 +32,59 @@
           flex-wrap: wrap;
          }
          .repo {
-          background: #ffffff;
-          border: 1px solid #e1e4e8;
+          background: #131726;
+          border: 1px solid rgba(255,255,255,0.07);
           border-radius: 8px;
           padding: 7px 10px 13px;
           margin-bottom: 0px;
           transition: 0.2s;
-          width: 232px;
+          width: 228px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
          }
          .repo:hover {
-         border-color: #0366d6;
-         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+          border-color: rgba(79,142,247,0.35);
+          box-shadow: 0 16px 48px rgb(0 0 0 / 40%), 0 0 0 1px rgb(79 142 247 / 15%);
          }
          .repo-name {
          font-size: 14px;
          font-weight: 600;
-         color: #0366d6;
+         color: #e8eaf0;
          }
          .repo-name a {
          text-decoration: none;
          color: inherit;
          }
          .repo-desc {
-         font-size: 12px;
-         color: #586069;
-         margin: 2px 0px 8px;
+          font-size: 12px;
+          color: #7a82a0;
+          line-height: 16px;
+          margin: 2px 0px 8px;
+          height: 40px;
+         }
+         .repo-link {
+          border-top: 1px solid rgba(255,255,255,0.07);
+          width: 100%;
+          padding-top: 10px;
          }
          .repo-link a {
-         font-size: 12px;
-         color: #24292e;
-         background: #eff3f6;
-         padding: 2px 4px 2px;
-         border-radius: 4px;
-         text-decoration: none;
-         border: 1px solid #d1d5da;
+          font-size: 12px;
+          padding: 3px 6px 4px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          border: 1px solid rgba(79,142,247,0.3);
+          color: #4f8ef7;
+          border-radius: 8px;
+          text-decoration: none;
+          cursor: pointer;
+          transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+          white-space: nowrap;
          }
          .repo-link a:hover {
-         background: #e1e4e8;
+         
          }
       </style>
    </head>
