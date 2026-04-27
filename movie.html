@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie App</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #fff;
+        }
+
+        /* Grid */
+        .movieCard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Card */
+        .outer {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #111;
+            cursor: pointer;
+        }
+
+        .outer:hover {
+            transform: scale(1.05);
+        }
+
+        /* Image */
+        .poster_path img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+        }
+
+        /* Overlay hidden */
+        .info {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        /* Show on hover */
+        .outer:hover .info {
+            opacity: 1;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .overview {
+            font-size: 12px;
+            max-height: 56px;
+            overflow: hidden;
+            padding-bottom: 10px;
+        }
+
+        .hello {
+            display: none;
+        }
+
+        .outer:hover .hello {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            padding: 10px;
+            background-color: #ea0406;
+            font-size: 12px;
+            color: #eaeaea;
+        }
+
+        p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container text-center mt-3">
+        <h2 style="color:#e50914;">Movie App</h2>
+
+        <input type="text" id="myInput" class="form-control w-50 mx-auto mt-3" placeholder="Search movie...">
+    </div>
+
+    <div class="movieCard" id="movieContainer"></div>
+
+    <script>
+        const APIURL =
+            "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
+
+        const baseImg = "https://image.tmdb.org/t/p/w500";
+
+        let movieCard = document.querySelector('.movieCard');
+
+        let allMovies = []; // ✅ store data globally
+
+        const getMoviesData = async () => {
+            try {
+                const response = await fetch(APIURL);
+                const data = await response.json();
+
+                const mymovies = data.results;
+                allMovies = mymovies; // ✅ store globally
+
+                let html = "";
+
+                mymovies.forEach(movie => {
+                    html += `
+       
+                <div class="outer movie-card">
+                   
+                <div class="poster_path">
+                    <img src="${baseImg + movie.poster_path}" alt="poster">
+                </div>
+                <div class="hello">
+
+                <div class="original_title">
+                    <p><strong>Title:</strong> ${movie.original_title}</p>
+                </div>
+
+                <div class="overview">
+                    <p><strong>Overview:</strong> ${movie.overview}</p>
+                </div>
+
+                <div class="release_date">
+                    <p><strong>Release Date:</strong> ${movie.release_date}</p>
+                </div>
+
+                <div class="vote_average">
+                    <p><strong>Vote:</strong> ${movie.vote_average}</p>
+                </div>
+            </div>
+            </div>
+                
+            `;
+                });
+
+                movieCard.innerHTML = html;
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        getMoviesData();
+
+
+        // ✅ SEARCH (moved outside loop)
+        let demo = document.querySelector("#myInput");
+
+        demo.addEventListener("input", function () {
+            let a = demo.value;
+            let upperCase = a.toUpperCase();
+
+            let cards = document.querySelectorAll(".movie-card");
+
+            allMovies.forEach((movie, i) => {
+                let allMoviesName = movie.original_title;
+                let upperCaseMovies = allMoviesName.toUpperCase();
+
+                if (upperCaseMovies.includes(upperCase)) {
+                    cards[i].style.display = "block";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
