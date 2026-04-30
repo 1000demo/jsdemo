@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <style>
+       * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main Card */
+.container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.todo-app {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Input Row */
+.row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#input-box {
+    flex: 1;
+    padding: 10px 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+#input-box:focus {
+    border-color: #667eea;
+}
+
+/* Add Button */
+button {
+    padding: 10px 16px;
+    border: none;
+    background: #667eea;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #5a67d8;
+}
+
+/* List */
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    background: #f7f7f7;
+    margin-bottom: 10px;
+    padding: 12px 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+}
+
+li:hover {
+    background: #eef0ff;
+}
+
+/* Task Text */
+.myText {
+    cursor: pointer;
+    font-size: 15px;
+}
+
+/* Checked Task */
+.checked {
+    color: green;
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+/* Delete Button */
+.deleteButton {
+    color: #ff4d4d;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: 0.2s;
+}
+
+.deleteButton:hover {
+    transform: scale(1.2);
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="todo-app">
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Add your text" />
+                <button onclick="addTask()">Add</button>
+            </div>
+            <ul id="list-container">
+
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- JS Code -->
+    <script>
+        const inputBox = document.getElementById('input-box');
+        const listContainer = document.getElementById('list-container');
+
+        function addTask() {
+            if (inputBox.value === '') {
+                alert('You must write something');
+            }
+            else {
+                let li = document.createElement('li');
+                listContainer.appendChild(li);
+
+                let newSpan = document.createElement('span');
+                li.appendChild(newSpan);
+                newSpan.innerHTML = inputBox.value;
+                newSpan.className = 'myText';
+
+                let span = document.createElement('span');
+                li.appendChild(span);
+                span.innerHTML = '✖';
+                span.className = 'deleteButton';
+            }
+            inputBox.value = ''; //clear input box..blank
+            saveData()
+        }
+
+        listContainer.addEventListener('click', function (e) {
+            if (e.target.classList.contains('myText')) {
+                e.target.classList.toggle('checked');
+                saveData()
+            }
+
+            else if (e.target.classList.contains('deleteButton')) {
+                e.target.parentElement.remove();
+                saveData()
+
+            }
+        }, false);
+
+        function saveData() {
+            localStorage.setItem('ketan', listContainer.innerHTML); //first Save localstorage 
+        }
+
+        //show data eveytime when we open webite
+        function showTask() {
+            listContainer.innerHTML = localStorage.getItem('ketan'); //then show localstorag
+        }
+        showTask();
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
