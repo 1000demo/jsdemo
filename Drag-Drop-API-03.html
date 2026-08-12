@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        text-align: center;
+        margin: 50px auto;
+        padding: 10px;
+        display: flex;
+        width: 50%;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+      }
+      .column {
+        border: 1px solid purple;
+        width: 150px;
+        min-height: 194px;
+        max-height: max-content;
+      }
+      .card {
+        background-color: #5a69d1;
+        margin: 5px;
+        padding: 2px;
+        font-size: 16px;
+        color: #000;
+      }
+      .card.dragging {
+        background-color: lightgreen;
+      }
+      .inprogress .card {
+        background-color: #c0ff00;
+        color: #000;
+      }
+
+      .completed .card {
+        background-color: green;
+        color: #fff;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">To Do List</h1>
+    <div class="container">
+      <div class="outer">
+        <h2>List</h2>
+        <div class="column">
+          <div class="card" draggable="true">Task 1</div>
+          <div class="card" draggable="true">Task 2</div>
+          <div class="card" draggable="true">Task 3</div>
+          <div class="card" draggable="true">Task 4</div>
+          <div class="card" draggable="true">Task 5</div>
+          <div class="card" draggable="true">Task 6</div>
+          <div class="card" draggable="true">Task 7</div>
+        </div>
+      </div>
+      <div class="outer">
+        <h2>Inprogress</h2>
+        <div class="column inprogress"></div>
+      </div>
+      <div class="outer">
+        <h2>Completed</h2>
+        <div class="column completed"></div>
+      </div>
+    </div>
+
+    <script>
+      const cards = document.querySelectorAll(".card");
+      const columns = document.querySelectorAll(".column");
+
+      cards.forEach((myCard) => {
+        myCard.addEventListener("dragstart", () => {
+          myCard.classList.add("dragging");
+        });
+
+        myCard.addEventListener("dragend", () => {
+          myCard.classList.remove("dragging");
+        });
+      });
+
+      columns.forEach((myColumn) => {
+        myColumn.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          const demo = document.querySelector('.dragging');
+          myColumn.appendChild(demo);
+        });
+      });
+    </script>
+  </body>
+</html>

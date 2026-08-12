@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        text-align: center;
+        margin: 50px auto;
+        padding: 10px;
+        display: flex;
+        width: 50%;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+      }
+      .fileBox {
+        width: 250px;
+        height: 250px;
+        border: 1px dashed blue;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">Upload Files...</h1>
+    <div class="container">
+      <div class="fileBox" id="fileBox">
+        <h3>Upload files here</h3>
+      </div>
+      <div id="fileInfo"></div>
+    </div>
+
+    <script>
+      const fileBox = document.querySelector("#fileBox");
+      fileBox.addEventListener("dragover", (e) => {
+        e.preventDefault();
+      });
+
+      fileBox.addEventListener("drop", (e) => {
+        const myFile = e.dataTransfer.files;
+         console.log(myFile);
+        // for (let file of myFile) {
+        //   console.log(file.name, file.size, file.type);
+        //   document.getElementById("fileInfo").innerHTML =
+        //     `Name: ${file.name} <br> Size: ${file.size} <br> Type: ${file.type}`;
+        // }
+        const fileInfo = document.getElementById("fileInfo");
+        fileInfo.innerHTML = "";
+
+        for (const file of myFile) {
+          const div = document.createElement("div");
+
+          div.innerHTML = `
+    <strong>Files Count:</strong> ${myFile.length}<br>
+      
+    <strong>Name:</strong> ${file.name}<br>
+    <strong>Size:</strong> ${file.size} bytes<br>
+    <strong>Type:</strong> ${file.type}
+    <hr>
+  `;
+
+          fileInfo.appendChild(div);
+        }
+      });
+    </script>
+  </body>
+</html>

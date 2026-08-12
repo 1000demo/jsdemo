@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .dragMe {
+        background-color: yellow;
+        width: 100px;
+        height: 20px;
+        text-align: center;
+        padding: 10px;
+      }
+      .dragHere {
+        width: 200px;
+        height: 100px;
+        border: 2px dashed red;
+        text-align: center;
+        padding: 10px;
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+      }
+      .container {
+    text-align: center;
+    margin: 0 auto;
+    width: 30%;
+    border: 1px solid #000;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Drag Drop API</h1>
+    <div class="dragMe" id="box" draggable="true">Drag Me</div>
+    <div class="dragHere" id="target">Drop Here</div>
+    </div>
+    <script>
+      const box = document.querySelector('#box');
+      const target = document.querySelector('#target');
+
+      box.addEventListener("dragstart", ()=> {
+        console.log("Drag Strat...");
+      })
+
+      target.addEventListener("dragover", (event)=> {
+        event.preventDefault(); 
+        console.log("Dragover Started");
+      })
+
+      target.addEventListener("drop", (event)=> {
+        target.appendChild(box);
+        console.log("Dropped Called");
+
+      })
+      
+
+
+     
+
+    </script>
+  </body>
+</html>
