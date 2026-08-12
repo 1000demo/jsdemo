@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>JS Practice</h1>
+
+    <p id="showData"></p>
+
+    <script>
+      const person = {
+        firstName: "John",
+        lastName: "Doe",
+        age: 30,
+        city: "Pune",
+        profession: "UI Developer",
+        skills: ["HTML", "CSS", "JavaScript", "React", "TypeScript"],
+      };
+
+      //const demo = `${person.firstName},  ${person.lastName},  ${person.age},  ${person.skills.join(", ")}`
+      //document.getElementById('result').textContent = demo;
+
+      //destructuring...
+      // const {firstName, lastName, age, skills} = person;
+      // const demo = `${firstName}, ${age}, ${skills.join(", ")}`;
+      // document.getElementById('result').textContent = demo;
+
+      //   const student = {
+      //     firstName: 'John',
+      //     rollNo: 101,
+      //     ciy: 'Texas',
+      //     country: 'USA'
+      //   }
+      //  console.log(student.firstName, student.rollNo);
+      //  const {firstName, rollNo} = student;
+      //  console.log(firstName, rollNo);
+
+      // const numData_1 = [10, 20, 30];
+      // const numData_2 = [...numData_1, 40, 50, 60];
+      // console.log(numData_2);
+      //Spread Operator ...
+      // const person_2 = { ...person, firstName: "Thomas", lastName: "Cook" };
+
+      // console.log("Person 1: ", person);
+      // console.log("Person 2: ", person_2);
+
+      // const num1 = [10, 20, 30, 40, 50, 60];
+      // const num2 = [...num1.filter(num => num !== 60), 70, 80];
+      // console.log("Numer 1", num1);
+      // console.log("Numer 2", num2);
+
+      //map()
+      // const numbers = [10, 20, 30, 40, 50];
+      // const myResult = numbers.map((num) => {
+      //   return num + 1;
+      // });
+      // console.log(myResult);
+
+      const mobiles = [
+        {
+          name: "iPhone 16",
+          price: 100000,
+          brand: "Apple",
+        },
+        {
+          name: "Galaxy S25",
+          price: 200000,
+          brand: "Samsung",
+        },
+        {
+          name: "OnePlus 13",
+          price: 90000,
+          brand: "OnePlus",
+        },
+        {
+          name: "Pixel 10",
+          price: 70000,
+          brand: "Google",
+        },
+        {
+          name: "Xiaomi 16 Pro",
+          price: 50000,
+          brand: "Xiaomi",
+        },
+        {
+          name: "Moto Edge 60",
+          price: 30000,
+          brand: "Motorola",
+        },
+        {
+          name: "Nokia",
+          price: 10000,
+          brand: "NokiaTestMobile",
+        },
+      ];
+
+      const mobileList = mobiles;
+      let myText = "";
+      const mobile = mobileList.filter((item) => item.price > 90000);
+
+      if (mobile.length > 0) {
+        myText = `
+        <p style="color: green;font-weight: bold;">${mobile.length} record(s) found out of ${mobileList.length}</p>
+        <table border="1" cellpadding="10" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Sr. No.</th>
+          <th>Mobile Name</th>
+          <th>Brand</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        `;
+        mobile.forEach((mylist, index) => {
+          myText += `
+        <tr>
+        <td>${index + 1}</td>
+        <td>${mylist.name}</td>
+        <td>${mylist.brand}</td>
+        <td>₹${mylist.price}</td>
+      </tr>
+          `;
+        });
+      } else {
+        myText = `<p style="color: red;font-weight: bold;">Record not found</p>`;
+      }
+      document.getElementById("showData").innerHTML = myText;
+    </script>
+  </body>
+</html>
