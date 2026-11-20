@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Employee Dashboard</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        color: #222;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      button {
+        padding: 10px 16px;
+        background: #2a7de1;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 5px;
+      }
+
+      button:hover {
+        background: #1b64bd;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background: #2a7de1;
+        color: white;
+      }
+
+      tr:hover {
+        background: #f0f6ff;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Employee Dashboard</h1>
+
+      <div class="toolbar">
+        <input type="text" id="search" placeholder="Search employees..." />
+
+        <button type="button" id="addEmployeeBtn">Add Employee</button>
+      </div>
+
+      <div id="employeeForm" class="hidden">
+        <input type="text" id="empName" placeholder="Employee Name" />
+        <input type="text" id="empRole" placeholder="Role" />
+        <input type="text" id="empDepartment" placeholder="Department" />
+
+        <button type="button" id="saveEmployeeBtn">Save Employee</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Department</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+     const employees = [
+  { id: 101, name: "Asha Patil", role: "Software Engineer", department: "Engineering" },
+  { id: 102, name: "Rohan Mehta", role: "Product Manager", department: "Product" },
+  { id: 103, name: "Neha Kulkarni", role: "UX Designer", department: "Design" },
+  { id: 104, name: "Vikram Joshi", role: "HR Executive", department: "Human Resources" },
+];
+
+// SELECT ELEMENTS
+const result = document.getElementById("rows");
+const searchElement = document.getElementById("search");
+const addEmployeeBtn = document.getElementById("addEmployeeBtn");
+const employeeForm = document.getElementById("employeeForm");
+const saveEmployeeBtn = document.getElementById("saveEmployeeBtn");
+
+const empName = document.getElementById("empName");
+const empRole = document.getElementById("empRole");
+const empDepartment = document.getElementById("empDepartment");
+
+// Remember which employee is being edited
+let editIndex = null;
+
+// DISPLAY EMPLOYEES
+function displayEmployees() {
+  const inputValue = searchElement.value.toLowerCase();
+
+  const valueMatched = employees.filter((item) => {
+    return item.name.toLowerCase().includes(inputValue);
+  });
+
+  result.innerHTML = valueMatched
+    .map((item) => {
+      return `
+        <tr>
+          <td>${item.id}</td>
+          <td>${item.name}</td>
+          <td>${item.role}</td>
+          <td>${item.department}</td>
+          <td>
+            <button onclick="editEmployee(${employees.indexOf(item)})">Edit</button>
+            <button onclick="deleteEmployee(${employees.indexOf(item)})">Delete</button>
+          </td>
+        </tr>
+      `;
+    })
+    .join("");
+}
+
+// INITIAL DISPLAY
+displayEmployees();
+
+// DELETE EMPLOYEE
+function deleteEmployee(index) {
+  employees.splice(index, 1);
+  displayEmployees();
+}
+
+// EDIT EMPLOYEE
+function editEmployee(index) {
+  editIndex = index;
+
+  employeeForm.classList.remove("hidden");
+
+  empName.value = employees[index].name;
+  empRole.value = employees[index].role;
+  empDepartment.value = employees[index].department;
+}
+
+// SEARCH EMPLOYEE
+searchElement.addEventListener("input", () => {
+  displayEmployees();
+});
+
+// ADD EMPLOYEE FORM
+addEmployeeBtn.addEventListener("click", () => {
+  editIndex = null;
+
+  empName.value = "";
+  empRole.value = "";
+  empDepartment.value = "";
+
+  employeeForm.classList.remove("hidden");
+});
+
+// SAVE / UPDATE EMPLOYEE
+saveEmployeeBtn.addEventListener("click", () => {
+  const name = empName.value.trim();
+  const role = empRole.value.trim();
+  const department = empDepartment.value.trim();
+
+  // VALIDATION
+  if (name === "" || role === "" || department === "") {
+    alert("All fields must be filled");
+    return;
+  }
+
+  if (editIndex !== null) {
+    // UPDATE EXISTING EMPLOYEE
+    const updatedEmployee = {
+      id: employees[editIndex].id,
+      name: name,
+      role: role,
+      department: department,
+    };
+
+    employees[editIndex] = updatedEmployee;
+
+  } else {
+    // ADD NEW EMPLOYEE
+    const lastEmpID = employees.length > 0
+      ? employees[employees.length - 1].id
+      : 100;
+
+    const employeeData = {
+      id: lastEmpID + 1,
+      name: name,
+      role: role,
+      department: department,
+    };
+
+    employees.push(employeeData);
+  }
+
+  // RESET EDIT MODE
+  editIndex = null;
+
+  // CLEAR FORM
+  empName.value = "";
+  empRole.value = "";
+  empDepartment.value = "";
+
+  // HIDE FORM
+  employeeForm.classList.add("hidden");
+
+  // REFRESH TABLE
+  displayEmployees();
+});
+    </script>
+  </body>
+</html>
